@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# $SWITCH_STATE is a value provided through the udev environment
+
+PULSE_SERVER="unix:/run/user/32011/pulse/native"
+export PULSE_COOKIE=/home/phablet/.config/pulse/cookie
+
+if [ "$SWITCH_STATE" == "1" ]; then
+    /usr/bin/pactl --server $PULSE_SERVER set-sink-port sink.primary output-wired_headset
+    /usr/bin/pactl --server $PULSE_SERVER set-source-port source.primary input-wired_headset
+elif [ "$SWITCH_STATE" == "0" ]; then
+    /usr/bin/pactl --server $PULSE_SERVER set-sink-port sink.primary output-speaker
+    /usr/bin/pactl --server $PULSE_SERVER set-source-port source.primary input-builtin_mic
+fi
