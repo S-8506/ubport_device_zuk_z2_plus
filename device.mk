@@ -405,3 +405,11 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 # Droidmedia
 MINIMEDIA_SENSORSERVER_DISABLE := 1
+
+
+# telepathy-ofono quirks
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.t-o.quirk.forcesink=sink.primary_output \
+    ro.t-o.quirk.forcesource=source.record_24_primary_input
+
+
