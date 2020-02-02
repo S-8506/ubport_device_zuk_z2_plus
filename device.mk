@@ -363,7 +363,7 @@ PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/ubuntu/libs/liblowi_client.so:system/lib/liblowi_client.so \
      $(LOCAL_PATH)/ubuntu/libs/libI420colorconvert.so:system/lib/libI420colorconvert.so \
      $(LOCAL_PATH)/ubuntu/libs/libmm-color-convertor.so:system/lib/libmm-color-convertor.so \
-     $(LOCAL_PATH)/system/halium/fix_pulseaudio.sh:system/halium/usr/share/fixup/fix_pulseaudio.sh 
+     $(LOCAL_PATH)/rootdir/system/halium/usr/share/fixup/fix_pulseaudio.sh:system/halium/usr/share/fixup/fix_pulseaudio.sh 
 
 # Ubuntu Touch common USB initialization
 PRODUCT_COPY_FILES += \
