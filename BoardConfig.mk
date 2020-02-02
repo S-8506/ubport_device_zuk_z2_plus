@@ -77,7 +77,8 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_CONFIG := z2_plus_defconfig
-TARGET_KERNEL_SOURCE := kernel/zuk/msm8996
+TARGET_KERNEL_SOURCE := kernel/zuk/z2_plus
+
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
@@ -218,6 +219,16 @@ WIFI_DRIVER_FW_PATH_P2P := "p2p"
 WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/wlan.ko"
 WIFI_DRIVER_MODULE_NAME := "wlan"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
+
+
+#by LittleBoy
+
+BOARD_USE_LOCAL_INITRD :=true
+BOARD_HEALTHD_CUSTOM_CHARGER_RES := $(PLATFORM_PATH)/charger/images
+
+
+#allow arm64 libhybris
+HYBRIS_MEDIA_32_BIT_ONLY := false
 
 # inherit from the proprietary version
 -include vendor/zuk/z2_plus/BoardConfigVendor.mk
