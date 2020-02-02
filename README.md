@@ -1,5 +1,5 @@
 Device configuration for ZUK Z2 (z2_plus).
 
-Based on the work of davidevinavil and Fedor917.
+create by @Littleboy
 
-This branch is for building LineageOS 14.1
+This branch is for building  Ubport 7.1
