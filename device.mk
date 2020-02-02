@@ -385,3 +385,23 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 
+
+PRODUCT_PACKAGES += \
+	libcameraservice_32 \
+	libaudioflingerglue_32 \
+	libminisf  \
+	minimediaservice \
+        miniafservice \
+	libubuntu_application_api \
+        libdroidmedia \
+        libui_compat_layer \
+       libsf_compat_layer \
+       gst-droid \
+       libcamera_compat_layer 
+
+# Offline charging
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.enable_boot_charger_mode=1 
+
+# Droidmedia
+MINIMEDIA_SENSORSERVER_DISABLE := 1
