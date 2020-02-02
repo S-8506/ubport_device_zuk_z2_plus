@@ -1241,3 +1241,17 @@ service seemp_healthd /system/vendor/bin/seemp_healthd
 # Slpi restart
 on property:slpi.restart=1
     write /sys/kernel/debug/msm_subsys/slpi restart
+
+
+service minimedia /system/bin/minimediaservice
+    class main
+    user media
+    group audio camera
+    ioprio rt 4
+#   hack to make recorded video playback work
+    setenv LD_PRELOAD /system/lib/libOmxVdec.so
+	
+service miniafservice /system/bin/miniafservice
+    class core
+    user root
+    group audio
