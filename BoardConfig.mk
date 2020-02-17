@@ -36,6 +36,9 @@ TARGET_KERNEL_SOURCE := kernel/zuk/z2_plus
 # Lights (see liblight/Android.mk in msm8996-common)
 TARGET_LIGHTS_ONLY_RED_LED := true
 
+#allow arm64 libhybris
+HYBRIS_MEDIA_32_BIT_ONLY := false
+
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
