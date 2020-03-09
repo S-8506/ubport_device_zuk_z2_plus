@@ -1,0 +1,54 @@
+# Audio ACDB
+etc/acdbdata/MTP/MTP_Bluetooth_cal.acdb
+etc/acdbdata/MTP/MTP_General_cal.acdb
+etc/acdbdata/MTP/MTP_Global_cal.acdb
+etc/acdbdata/MTP/MTP_Handset_cal.acdb
+etc/acdbdata/MTP/MTP_Hdmi_cal.acdb
+etc/acdbdata/MTP/MTP_Headset_cal.acdb
+etc/acdbdata/MTP/MTP_Speaker_cal.acdb
+
+# Camera actuators
+vendor/lib/libactuator_dw9767.so
+
+# Camera chromatix
+vendor/lib/libchromatix_s5k2m8sx_common.so
+vendor/lib/libchromatix_s5k2m8sx_cpp_hfr_120.so
+vendor/lib/libchromatix_s5k2m8sx_cpp_hfr_60.so
+vendor/lib/libchromatix_s5k2m8sx_cpp_hfr_90.so
+vendor/lib/libchromatix_s5k2m8sx_cpp_liveshot.so
+vendor/lib/libchromatix_s5k2m8sx_cpp_preview.so
+vendor/lib/libchromatix_s5k2m8sx_cpp_snapshot.so
+vendor/lib/libchromatix_s5k2m8sx_cpp_video.so
+vendor/lib/libchromatix_s5k2m8sx_default_preview_dw9767.so
+vendor/lib/libchromatix_s5k2m8sx_default_video_dw9767.so
+vendor/lib/libchromatix_s5k2m8sx_default_video.so
+vendor/lib/libchromatix_s5k2m8sx_hfr_120_dw9767.so
+vendor/lib/libchromatix_s5k2m8sx_hfr_120.so
+vendor/lib/libchromatix_s5k2m8sx_hfr_60_dw9767.so
+vendor/lib/libchromatix_s5k2m8sx_hfr_60.so
+vendor/lib/libchromatix_s5k2m8sx_hfr_90_dw9767.so
+vendor/lib/libchromatix_s5k2m8sx_hfr_90.so
+vendor/lib/libchromatix_s5k2m8sx_liveshot.so
+vendor/lib/libchromatix_s5k2m8sx_postproc.so
+vendor/lib/libchromatix_s5k2m8sx_preview.so
+vendor/lib/libchromatix_s5k2m8sx_snapshot.so
+vendor/lib/libchromatix_s5k2m8sx_zsl_preview_dw9767.so
+vendor/lib/libchromatix_s5k2m8sx_zsl_video_dw9767.so
+
+# Camera configs
+etc/camera/msm8996_camera.xml
+etc/camera/s5k2m8sx_chromatix.xml
+
+# Camera eeproms
+vendor/lib/libmmcamera_onsemi_cat24c64_eeprom.so
+
+# Camera sensors
+vendor/lib/libmmcamera_ov8865.so
+vendor/lib/libmmcamera_s5k2m8sx.so
+
+# Media
+vendor/lib64/libmmosal.so
+
+# Sensors
+etc/sensors/hals.conf
+etc/sensors/sensor_def_qcomdev.conf

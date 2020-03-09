@@ -1,0 +1,7 @@
+# Site-specific additions and overrides for usr.bin.media-hub-server.
+# For more details, please see /etc/apparmor.d/local/README.
+/dev/socket/logdw              rw,
+/dev/pmsg0                     rw,
+/dev/socket/property_service	rw,
+/dev/proc/cmdline		r,
+/socket/logdw  rw,
