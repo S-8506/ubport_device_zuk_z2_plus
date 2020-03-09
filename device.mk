@@ -1,5 +1,6 @@
-# Copyright (C) 2013-2016, The CyanogenMod Project
-# Copyright (C) 2017, The LineageOS Project
+#
+# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,82 +13,153 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-#
-# This file sets variables that control the way modules are built
-# thorughout the system. It should not be used to conditionally
-# disable makefiles (the proper mechanism to control what gets
-# included in a build is to use PRODUCT_PACKAGES in a product
-# definition file).
 #
 
+# Get non-open-source specific aspects
 $(call inherit-product, vendor/zuk/z2_plus/z2_plus-vendor.mk)
 
-# Overlays
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
-# ANT+
-PRODUCT_PACKAGES += \
-    AntHalService \
-    com.dsi.ant.antradio_library \
-    libantradio
+# Local overlays
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay \
+    $(LOCAL_PATH)/overlay-lineage
 
-# Permissions
+# Inherit from msm8996-common
+$(call inherit-product, device/zuk/msm8996-common/msm8996.mk)
+
+
+
 PRODUCT_COPY_FILES += \
-    external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:system/etc/permissions/com.dsi.ant.antradio_library.xml \
-    frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
-    frameworks/native/data/etc/android.hardware.audio.pro.xml:system/etc/permissions/android.hardware.audio.pro.xml \
-    frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
-    frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
-    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
-    frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
-    frameworks/native/data/etc/android.hardware.camera.full.xml:system/etc/permissions/android.hardware.camera.full.xml \
-    frameworks/native/data/etc/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml \
-    frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml \
-    frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/etc/permissions/android.hardware.opengles.aep.xml \
-    frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
-    frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml \
-    frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
-    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
-    frameworks/native/data/etc/android.hardware.sensor.hifi_sensors.xml:system/etc/permissions/android.hardware.sensor.hifi_sensors.xml \
-    frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-    frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:system/etc/permissions/android.hardware.sensor.stepcounter.xml \
-    frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:system/etc/permissions/android.hardware.sensor.stepdetector.xml \
-    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
-    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
-    frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
-    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:system/etc/permissions/android.hardware.vulkan.level.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:system/etc/permissions/android.hardware.vulkan.version.xml \
-    frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
-    frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml \
-    frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
+    $(LOCAL_PATH)/rootdir/system/etc/mixer_paths.xml:system/etc/mixer_paths.xml \
+    $(LOCAL_PATH)/audio/mixer_paths_tasha.xml:system/etc/mixer_paths_tasha.xml \
+    $(LOCAL_PATH)/rootdir/system/halium/usr/share/apparmor/hardware/video.d/apparmor-easyprof-ubuntu_android:system/halium/usr/share/apparmor/hardware/video.d/apparmor-easyprof-ubuntu_android \
+#    $(LOCAL_PATH)/rootdir/system/halium/usr/share/h2w/switch:system/halium/usr/share/h2w/switch 
+#    $(LOCAL_PATH)/rootdir/system/etc/audio_policy.conf:system/etc/audio_policy.conf \
 
-# Device uses high-density artwork where available
-PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
-# Boot animation
-TARGET_SCREEN_HEIGHT := 1920
-TARGET_SCREEN_WIDTH := 1080
+	
+# ubuntu overlay
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:system/halium/lib/udev/rules.d/70-android.rules \
+    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:system/halium/lib/udev/rules.d/70-z2_plus.rules \
+    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:system/halium/usr/lib/lxc-android-config/70-android.rules \
+    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:system/halium/usr/lib/lxc-android-config/70-z2_plus.rules \
+    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:system/ubuntu/usr/lib/lxc-android-config/70-android.rules \
+    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:system/ubuntu/usr/lib/lxc-android-config/70-z2_plus.rules \
+    $(LOCAL_PATH)/ubuntu/apparmor.d/abstractions/base:system/halium/etc/apparmor.d/abstractions/base \
+    $(LOCAL_PATH)/ubuntu/servicemanager.rc:system/etc/init/servicemanager.rc \
+    $(LOCAL_PATH)/ubuntu/apparmor.d/local/usr.bin.media-hub-server:system/halium/etc/apparmor.d/local/usr.bin.media-hub-server \
+    $(LOCAL_PATH)/ubuntu/adbd.conf:system/ubuntu/etc/init/adbd.conf \
+    $(LOCAL_PATH)/ubuntu/timekeeper.conf:system/halium/etc/init/timekeeper.conf \
+    $(LOCAL_PATH)/ubuntu/config.xml:system/ubuntu/usr/share/repowerd/device-configs/config-zuk.xml \
+    $(LOCAL_PATH)/ubuntu/config.xml:system/ubuntu/usr/share/repowerd/device-configs/config-z2_plus.xml \
+    $(LOCAL_PATH)/ubuntu/init_setup_first_boot.sh:system/halium/var/lib/lxc/android/pre-start.d/init_setup_first_boot.sh \
+    $(LOCAL_PATH)/ubuntu/ofono.override:system/ubuntu/etc/init/ofono.override \
+    $(LOCAL_PATH)/ubuntu/anbox-tool:system/halium/usr/bin/anbox-tool \
+    $(LOCAL_PATH)/ubuntu/touch.pa:system/halium/etc/pulse/touch.pa \
+    $(LOCAL_PATH)/ubuntu/touch-symlinks.conf:system/halium/etc/init/touch-symlinks.conf \
+    $(LOCAL_PATH)/ubuntu/unblock_wakelock.sh:system/etc/unblock_wakelock.sh \
+  $(LOCAL_PATH)/ubuntu/config.xml:system/halium/usr/share/powerd/device_configs/config-default.xml \
+    $(LOCAL_PATH)/ubuntu/environment:system/halium/etc/environment \
+    $(LOCAL_PATH)/ubuntu/apparmor.d/hardware/graphics.d/apparmor-easyprof-ubuntu_android:system/halium/usr/share/apparmor/hardware/graphics.d/apparmor-easyprof-ubuntu_android \
+    $(LOCAL_PATH)/ubuntu/apparmor.d/hardware/video.d/apparmor-easyprof-ubuntu_android:system/halium/usr/share/apparmor/hardware/video.d/apparmor-easyprof-ubuntu_android \
+    $(LOCAL_PATH)/ubuntu/usr/lib/arm-linux-gnueabihf/gstreamer-1.0/libgstandroidmedia.so:system/usr/lib/arm-linux-gnueabihf/gstreamer-1.0/libgstandroidmedia.so \
+    $(LOCAL_PATH)/ubuntu/usr/lib/arm-linux-gnueabihf/gstreamer-1.0/libgstmirsink.so:system/usr/lib/arm-linux-gnueabihf/gstreamer-1.0/libgstmirsink.so \
+    $(LOCAL_PATH)/ubuntu/usr/lib/arm-linux-gnueabihf/gstreamer-1.0/libgstandroidmedia.so:system/ubuntu/usr/lib/arm-linux-gnueabihf/gstreamer-1.0/libgstandroidmedia.so \
+    $(LOCAL_PATH)/ubuntu/usr/lib/arm-linux-gnueabihf/gstreamer-1.0/libgstmirsink.so:system/ubuntu/usr/lib/arm-linux-gnueabihf/gstreamer-1.0/libgstmirsink.so 
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hwui.texture_cache_size=72 \
-    ro.hwui.layer_cache_size=48 \
-    ro.hwui.r_buffer_cache_size=8 \
-    ro.hwui.path_cache_size=32 \
-    ro.hwui.gradient_cache_size=1 \
-    ro.hwui.drop_shadow_cache_size=6 \
-    ro.hwui.texture_cache_flushrate=0.4 \
-    ro.hwui.text_small_cache_width=1024 \
-    ro.hwui.text_small_cache_height=1024 \
-    ro.hwui.text_large_cache_width=2048 \
-    ro.hwui.text_large_cache_height=1024
+
+
+
+
+# Ubuntu Overlay Files
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/mixer_paths.xml:system/ubuntu/etc/mixer_paths.xml \
+    $(LOCAL_PATH)/audio/mixer_paths_tasha.xml:system/ubuntu/etc/mixer_paths_tasha.xml 
+
+
+
+   
+#Fix sensors	x
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/rootdir/vendor/etc/sensors/sensor_def_qcomdev.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/sensor_def_qcomdev.conf	\
+	$(LOCAL_PATH)/rootdir/vendor/etc/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
+	
+# Camera Configuration
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/vendor/etc/camera/msm8996_camera.xml:$(TARGET_COPY_OUT_VENDOR)/etc/camera/msm8996_camera.xml \
+    $(LOCAL_PATH)/rootdir/vendor/etc/camera/s5k2m8sx_chromatix.xml:$(TARGET_COPY_OUT_VENDOR)/etc/camera/s5k2m8sx_chromatix.xml 
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Bluetooth_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/Bluetooth_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/General_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/General_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Global_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/Global_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Handset_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/Handset_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Hdmi_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/Hdmi_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Headset_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/Headset_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Speaker_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/Speaker_cal.acdb
+
+
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Bluetooth_cal.acdb:system/etc/acdbdata/Bluetooth_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/General_cal.acdb:system/etc/acdbdata/General_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Global_cal.acdb:system/etc/acdbdata/Global_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Handset_cal.acdb:system/etc/acdbdata/Handset_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Hdmi_cal.acdb:system/etc/acdbdata/Hdmi_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Headset_cal.acdb:system/etc/acdbdata/Headset_cal.acdb \
+    $(LOCAL_PATH)/rootdir/vendor/etc/acdbdata/Speaker_cal.acdb:system/etc/acdbdata/Speaker_cal.acdb
+	
+PRODUCT_COPY_FILES += \
+     $(LOCAL_PATH)/ubuntu/libs/liblbs_core.so:system/lib/liblbs_core.so \
+     $(LOCAL_PATH)/ubuntu/libs/libloc_api_v02.so:system/lib/libloc_api_v02.so \
+     $(LOCAL_PATH)/ubuntu/libs/liblocationservice_glue.so:system/lib/liblocationservice_glue.so \
+     $(LOCAL_PATH)/ubuntu/libs/liblocationservice.so:system/lib/liblocationservice.so \
+     $(LOCAL_PATH)/ubuntu/libs/libulp2.so:system/lib/libulp2.so \
+     $(LOCAL_PATH)/ubuntu/libs/libdataitems.so:system/lib/libdataitems.so \
+     $(LOCAL_PATH)/ubuntu/libs/libdrplugin_client.so:system/lib/libdrplugin_client.so \
+     $(LOCAL_PATH)/ubuntu/libs/libDRPlugin.so:system/lib/libDRPlugin.so \
+     $(LOCAL_PATH)/ubuntu/libs/libevent_observer.so:system/lib/libevent_observer.so \
+     $(LOCAL_PATH)/ubuntu/libs/libizat_core.so:system/lib/libizat_core.so \
+     $(LOCAL_PATH)/ubuntu/libs/liblowi_client.so:system/lib/liblowi_client.so \
+     $(LOCAL_PATH)/ubuntu/libs/libI420colorconvert.so:system/lib/libI420colorconvert.so \
+     $(LOCAL_PATH)/ubuntu/libs/libmm-color-convertor.so:system/lib/libmm-color-convertor.so \
+     $(LOCAL_PATH)/rootdir/system/halium/usr/share/fixup/fix_pulseaudio.sh:system/halium/usr/share/fixup/fix_pulseaudio.sh  \
+     $(LOCAL_PATH)/ubuntu/init_hcismd_up.sh:system/etc/init_hcismd_up.sh 
+	
+
+
+# Thermal
+PRODUCT_PACKAGES += \
+    thermal.msm8996
+	
+# Ubuntu Touch common USB initialization
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/system/halium/usr/share/usbinit/setupusb:system/halium/usr/share/usbinit/setupusb \
+    $(LOCAL_PATH)/rootdir/system/halium/etc/init/mtp-state.conf:system/halium/etc/init/mtp-state.conf \
+    $(LOCAL_PATH)/rootdir/system/halium/usr/share/upstart/sessions/mtp-server.conf:system/halium/usr/share/upstart/sessions/mtp-server.conf \
+    $(LOCAL_PATH)/rootdir/init.common.srv.rc:root/init.common.srv.rc \
+    $(LOCAL_PATH)/rootdir/init.common.rc:root/init.common.rc
+
+# Graphics
+PRODUCT_PACKAGES += \
+    libsdm-disp-apis
+
+
+
+# Display
+PRODUCT_PACKAGES += \
+    copybit.msm8996 \
+    gralloc.msm8996 \
+    hwcomposer.msm8996 \
+    memtrack.msm8996 \
+    liboverlay \
+    libtinyxml
+
+PRODUCT_PACKAGES += \
+    power.msm8996
+
+
 
 # Haters gonna hate..
 PRODUCT_CHARACTERISTICS := nosdcard
@@ -109,20 +181,31 @@ PRODUCT_PACKAGES += \
     tinymix
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
-    $(LOCAL_PATH)/audio/audio_output_policy.conf:system/vendor/etc/audio_output_policy.conf \
-    $(LOCAL_PATH)/audio/audio_policy.conf:system/vendor/etc/audio_policy.conf \
-    $(LOCAL_PATH)/audio/audio_platform_info.xml:system/etc/audio_platform_info.xml \
-    $(LOCAL_PATH)/audio/audio_policy_volumes.xml:system/etc/audio_policy_volumes.xml \
-    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio/listen_platform_info.xml:system/etc/listen_platform_info.xml \
-    $(LOCAL_PATH)/audio/mixer_paths.xml:system/etc/mixer_paths.xml \
-    $(LOCAL_PATH)/audio/mixer_paths_tasha.xml:system/etc/mixer_paths_tasha.xml \
-    $(LOCAL_PATH)/audio/mixer_paths_tasha_z2_plus_hw.xml:system/etc/mixer_paths_tasha_z2_plus_hw.xml \
-    $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml \
-    $(LOCAL_PATH)/audio/sound_trigger_mixer_paths_wcd9330.xml:system/etc/sound_trigger_mixer_paths_wcd9330.xml \
-    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml
+     $(LOCAL_PATH)/audio/audio_platform_info.xml:system/etc/audio_platform_info.xml \
+     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml \
+     $(LOCAL_PATH)/audio/mixer_paths_tasha.xml:system/etc/mixer_paths_tasha.xml \
+     $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf 
+#    $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
+#    $(LOCAL_PATH)/audio/audio_output_policy.conf:system/vendor/etc/audio_output_policy.conf \
+#    $(LOCAL_PATH)/audio/audio_platform_info.xml:system/etc/audio_platform_info.xml \
+#    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml \
+#    $(LOCAL_PATH)/audio/mixer_paths_tasha.xml:system/etc/mixer_paths_tasha.xml \
+#    $(LOCAL_PATH)/audio/mixer_paths.xml:system/vendor/etc/mixer_paths.xml \
+#    $(LOCAL_PATH)/audio/mixer_paths.xml:system/etc/mixer_paths.xml \
+#    $(LOCAL_PATH)/audio/mixer_paths_mtp.xml:system/vendor/etc/mixer_paths_mtp.xml \
+#    $(LOCAL_PATH)/audio/audio_platform_info_i2s.xml:system/etc/audio_platform_info_i2s.xml \
+#    $(LOCAL_PATH)/audio/mixer_paths_mtp.xml:system/etc/mixer_paths_mtp.xml \
+#    $(LOCAL_PATH)/audio/mixer_paths_dtp.xml:system/etc/mixer_paths_dtp.xml\
+##    $(LOCAL_PATH)/audio/mixer_paths_i2s.xml:system/etc/mixer_paths_i2s.xml \
+#   $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml \
+#    $(LOCAL_PATH)/audio/sound_trigger_mixer_paths_wcd9330.xml:system/etc/sound_trigger_mixer_paths_wcd9330.xml \
+#    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml \
+#    $(LOCAL_PATH)/audio/mixer_paths_tasha_z2_plus_hw.xml:system/etc/mixer_paths_tasha_z2_plus_hw.xml \
+#    $(LOCAL_PATH)/audio/mixer_paths_i2s.xml:system/etc/mixer_paths_i2s.xml \
+#    $(LOCAL_PATH)/audio/wfdconfig.xml:system/vendor/etc/wfdconfig.xml \
+#    $(LOCAL_PATH)/audio/wfdconfigsink.xml:system/etc/wfdconfigsink.xml 
 
+#    $(LOCAL_PATH)/audio/mixer_paths_tasha_z2_plus_hw.xml:system/etc/mixer_paths_tasha_z2_plus_hw.xml 
 
 PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:/system/etc/a2dp_audio_policy_configuration.xml \
@@ -130,79 +213,14 @@ PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/default_volume_tables.xml:/system/etc/default_volume_tables.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:/system/etc/r_submix_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:/system/etc/usb_audio_policy_configuration.xml
- 
-# Camera
-PRODUCT_PACKAGES += \
-    Snap
-
-# Connectivity Engine support (CNE)
-PRODUCT_PACKAGES += \
-    cneapiclient \
-    com.quicinc.cne \
-    services-ext
-
-# Display
-PRODUCT_PACKAGES += \
-    copybit.msm8996 \
-    gralloc.msm8996 \
-    hwcomposer.msm8996 \
-    memtrack.msm8996 \
-    liboverlay \
-    libtinyxml
-
-# Doze mode
-PRODUCT_PACKAGES += \
-    ZukDoze
-
-# Fingerprint
-PRODUCT_PACKAGES += \
-    fingerprintd
-
-# For android_filesystem_config.h
-PRODUCT_PACKAGES += \
-    fs_config_files
-
-# GPS
-PRODUCT_PACKAGES += \
-    gps.msm8996 \
-    libcurl \
-    libgnsspps
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/gps/etc/flp.conf:system/etc/flp.conf \
-    $(LOCAL_PATH)/gps/etc/gps.conf:system/etc/gps.conf \
-    $(LOCAL_PATH)/gps/etc/izat.conf:system/etc/izat.conf \
-    $(LOCAL_PATH)/gps/etc/lowi.conf:system/etc/lowi.conf \
-    $(LOCAL_PATH)/gps/etc/sap.conf:system/etc/sap.conf \
-    $(LOCAL_PATH)/gps/etc/xtwifi.conf:system/etc/xtwifi.conf
-
-# Graphics
-PRODUCT_PACKAGES += \
-    libsdm-disp-apis
-
-# IPA Manager
-PRODUCT_PACKAGES += \
-    ipacm \
-    IPACM_cfg.xml
-
-# IPC router config
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config
-
+     
 
 # Thermal
 PRODUCT_PACKAGES += \
     thermal.msm8996
-
-# Thermal
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine.conf:system/etc/thermal-engine.conf
 
-# IPv6
-PRODUCT_PACKAGES += \
-    ebtables \
-    ethertypes \
-    libebtc
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
@@ -213,28 +231,98 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/msm8996-tasha-mtp-snd-card_Button_Jack.kl:system/usr/keylayout/msm8996-tasha-mtp-snd-card_Button_Jack.kl \
     $(LOCAL_PATH)/keylayout/qpnp_pon.kl:system/usr/keylayout/qpnp_pon.kl
 
-# Lights
-PRODUCT_PACKAGES += \
-    lights.msm8996
 
-# LiveDisplay native
+# Fingerprint
 PRODUCT_PACKAGES += \
-    libjni_livedisplay
+    fingerprintd
 
-# Media
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.build.qti_bsp.abi=1
+	
+PRODUCT_PACKAGES += \
+    charger_res_images
+
+
+# UBPorts	
+PRODUCT_PACKAGES += \
+        libaudioflingerglue \
+	libmedia_compat_layer	\
+	libminisf  \
+	minimediaservice \
+        minisfservice \
+        miniafservice \
+	libubuntu_application_api \
+        libui_compat_layer \
+        libsf_compat_layer \
+	libmedia_compact_layer \
+        libcamera_compat_layer \
+        direct_ubuntu_application_sensors_c_api_for_hybris_test \
+        direct_ubuntu_application_sensors_for_hybris_test \
+        direct_ubuntu_application_gps_c_api_for_hybris_test \
+        libcameraservice \
+	libmedia \
+        camera_service \
+        libmediaplayerservice 
+
+
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	mm.enable.sec.smoothstreaming=true \
+	media.aac_51_output_enabled=true \
+	media.stagefright.enable-player=true\
+	media.stagefright.enable-http=true \
+	media.stagefright.enable-aac=true \
+	media.stagefright.enable-qcp=true \
+	media.stagefright.enable-fma2dp=true \
+	media.stagefright.enable-scan=true \
+	mm.enable.qcom_parser=1048575 \
+	av.debug.disable.pers.cache=true 
+
+#	mmp.enable.3g2=true
+
+# Enable optional sensor types
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.qti.sensors.smd=true \
+    ro.qti.sensors.game_rv=true \
+    ro.qti.sensors.georv=true \
+    ro.qti.sensors.smgr_mag_cal_en=true \
+    ro.qti.sensors.step_detector=true \
+    ro.qti.sensors.step_counter=true \
+    ro.qti.sensors.tap=false \
+    ro.qti.sensors.facing=false \
+    ro.qti.sensors.tilt=false \
+    ro.qti.sensors.amd=false \
+    ro.qti.sensors.rmd=false \
+    ro.qti.sensors.vmd=false \
+    ro.qti.sensors.pedometer=true \
+    ro.qti.sensors.pam=false \
+    ro.qti.sdk.sensors.gestures=false \
+    ro.qualcomm.bt.hci_transport=smd
+
+
+#enable Codec 2.0
+
+PRODUCT_PACKAGES += \
+	libmedia_codecserviceregistrant \
+	libqcodec2 \
+	libstagefright_ccodec 
+
+#MEDIA
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
+    $(LOCAL_PATH)/media/media_codecs.xml:system/etc/media_codecs.xml \
+   $(LOCAL_PATH)/media/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
+    $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml
 
-# Miracast
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.debug.wfd.enable=1
+
+PRODUCT_PACKAGES += \
+    e2fsck
+
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -248,50 +336,31 @@ PRODUCT_PACKAGES += \
     libOmxVdec \
     libOmxVenc \
     libOmxVdecHevc \
-    libstagefrighthw
+    libstagefrighthw \
+    libEGL \
+    libGLESv2 
 
-# Power
+# Camera
 PRODUCT_PACKAGES += \
-    power.msm8996
+    libqomx_core \
+    libmmcamera_interface \
+    libmmjpeg_interface \
+    mm-jpeg-interface-test \
+    mm-qcamera-app \
+    Snap \
 
-# QMI
-PRODUCT_PACKAGES += \
-    libjson
 
-# Ramdisk
-PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.qcom.power.rc \
-    init.qcom.rc \
-    init.qcom.sh \
-    init.qcom.usb.rc \
-    init.qcom.usb.sh \
-    init.qcom.bt.sh \
-    ueventd.qcom.rc
-
-# RIL
-PRODUCT_PACKAGES += \
-    librmnetctl \
-    libxml2 \
-    libprotobuf-cpp-full
+# Camera configuration
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    camera.disable_zsl_mode=1 \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true
 
 # TimeKeep
 PRODUCT_PACKAGES += \
     timekeep \
     TimeKeep
-
-# Sensors
-PRODUCT_PACKAGES += \
-    sensors.msm8996
-
-# Subsystem silent restart
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.ssr.restart_level=venus,AR6320,slpi,modem,adsp
-
-# FlipFlap
-PRODUCT_PACKAGES += \
-    FlipFlap
-
+	
 # Wifi
 PRODUCT_PACKAGES += \
     ipacm \
@@ -317,87 +386,21 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:system/etc/firmware/wlan/qca_cld/WCNSS_cfg.dat
-
-
-
-
-#<----------------@Littleboy----------------------->
-
-
-	
-# Audio
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:system/halium/lib/udev/rules.d/70-android.rules \
-    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:system/halium/lib/udev/rules.d/70-z2_plus.rules \
-    $(LOCAL_PATH)/ubuntu/apparmor.d/abstractions/base:system/halium/etc/apparmor.d/abstractions/base \
-    $(LOCAL_PATH)/ubuntu/servicemanager.rc:system/etc/init/servicemanager.rc \
-    $(LOCAL_PATH)/ubuntu/apparmor.d/local/usr.bin.media-hub-server:system/halium/etc/apparmor.d/local/usr.bin.media-hub-server \
-    $(LOCAL_PATH)/ubuntu/70-z2_plus.rules:/usr/lib/lxc-android-config/70-z2_plus.rules \
-    $(LOCAL_PATH)/ubuntu/adbd.conf:system/ubuntu/etc/init/adbd.conf \
-    $(LOCAL_PATH)/ubuntu/timekeeper.conf:system/halium/etc/init/timekeeper.conf \
-    $(LOCAL_PATH)/ubuntu/config.xml:system/ubuntu/usr/share/repowerd/device-configs/config-zuk.xml \
-    $(LOCAL_PATH)/ubuntu/config.xml:system/ubuntu/usr/share/repowerd/device-configs/config-z2_plus.xml \
-    $(LOCAL_PATH)/ubuntu/init_setup_first_boot.sh:system/halium/var/lib/lxc/android/pre-start.d/init_setup_first_boot.sh \
-    $(LOCAL_PATH)/ubuntu/ofono.override:system/ubuntu/etc/init/ofono.override \
-    $(LOCAL_PATH)/ubuntu/anbox-tool:system/halium/usr/bin/anbox-tool \
-    $(LOCAL_PATH)/rootdir/system/halium/usr/share/apparmor/hardware/video.d/apparmor-easyprof-ubuntu_android:system/halium/usr/share/apparmor/hardware/video.d/apparmor-easyprof-ubuntu_android \
-    $(LOCAL_PATH)/rootdir/system/halium/usr/share/h2w/switch:system/halium/usr/share/h2w/switch
-	
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/rootdir/vendor/etc/sensors/sensor_def_qcomdev.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/sensor_def_qcomdev.conf	\
-	$(LOCAL_PATH)/rootdir/vendor/etc/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
-
-
-
-PRODUCT_COPY_FILES += \
-     $(LOCAL_PATH)/ubuntu/libs/liblbs_core.so:system/lib/liblbs_core.so \
-     $(LOCAL_PATH)/ubuntu/libs/libloc_api_v02.so:system/lib/libloc_api_v02.so \
-     $(LOCAL_PATH)/ubuntu/libs/liblocationservice_glue.so:system/lib/liblocationservice_glue.so \
-     $(LOCAL_PATH)/ubuntu/libs/liblocationservice.so:system/lib/liblocationservice.so \
-     $(LOCAL_PATH)/ubuntu/libs/libulp2.so:system/lib/libulp2.so \
-     $(LOCAL_PATH)/ubuntu/libs/libdataitems.so:system/lib/libdataitems.so \
-     $(LOCAL_PATH)/ubuntu/libs/libdrplugin_client.so:system/lib/libdrplugin_client.so \
-     $(LOCAL_PATH)/ubuntu/libs/libDRPlugin.so:system/lib/libDRPlugin.so \
-     $(LOCAL_PATH)/ubuntu/libs/libevent_observer.so:system/lib/libevent_observer.so \
-     $(LOCAL_PATH)/ubuntu/libs/libizat_core.so:system/lib/libizat_core.so \
-     $(LOCAL_PATH)/ubuntu/libs/liblowi_client.so:system/lib/liblowi_client.so \
-     $(LOCAL_PATH)/ubuntu/libs/libI420colorconvert.so:system/lib/libI420colorconvert.so \
-     $(LOCAL_PATH)/ubuntu/libs/libmm-color-convertor.so:system/lib/libmm-color-convertor.so \
-     $(LOCAL_PATH)/rootdir/system/halium/usr/share/fixup/fix_pulseaudio.sh:system/halium/usr/share/fixup/fix_pulseaudio.sh 
-
+     
 # Ubuntu Touch common USB initialization
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/system/halium/usr/share/usbinit/setupusb:system/halium/usr/share/usbinit/setupusb \
     $(LOCAL_PATH)/rootdir/system/halium/etc/init/mtp-state.conf:system/halium/etc/init/mtp-state.conf \
-    $(LOCAL_PATH)/rootdir/system/halium/usr/share/upstart/sessions/mtp-server.conf:system/halium/usr/share/upstart/sessions/mtp-server.conf \
-    $(LOCAL_PATH)/rootdir/init.common.srv.rc:root/init.common.srv.rc
-
-
-# Media
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
-
-PRODUCT_COPY_FILES += \
-    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
+    $(LOCAL_PATH)/rootdir/system/halium/usr/share/upstart/sessions/mtp-server.conf:system/halium/usr/share/upstart/sessions/mtp-server.conf
 
 
 
+# Haters gonna hate..
+PRODUCT_CHARACTERISTICS := nosdcard
+
+# for off charging mode
 PRODUCT_PACKAGES += \
-	libcameraservice_32 \
-	libaudioflingerglue_32 \
-	libminisf  \
-	minimediaservice \
-        miniafservice \
-	libubuntu_application_api \
-        libdroidmedia \
-        libui_compat_layer \
-       libsf_compat_layer \
-       gst-droid \
-       libcamera_compat_layer 
+    charger_res_images
 
 # Offline charging
 ADDITIONAL_DEFAULT_PROPERTIES += \
@@ -406,10 +409,13 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 # Droidmedia
 MINIMEDIA_SENSORSERVER_DISABLE := 1
 
-
 # telepathy-ofono quirks
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.t-o.quirk.forcesink=sink.primary_output \
-    ro.t-o.quirk.forcesource=source.record_24_primary_input
+    ro.t-o.quirk.forcesource=source.record_24_primary_input \
+    ubuntu.widi.supported=1
 
+
+
+$(call inherit-product, vendor/zuk/msm8996-common/msm8996-common-vendor.mk)
 

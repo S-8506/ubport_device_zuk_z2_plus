@@ -44,6 +44,14 @@ on charger
     start rmt_storage
     start mlog_qmi_service
     start irsc_util
+    start charger_healthd
+
+service charger_healthd /sbin/healthd -c
+    class core
+    critical
+    group root system wakelock
+    disabled
+
 
 on fs
     mount_all ./fstab.${ro.hardware}

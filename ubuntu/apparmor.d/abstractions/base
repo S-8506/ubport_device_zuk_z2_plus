@@ -22,6 +22,7 @@
   # and localisations of date should be available EVERYWHERE, so
   # StackGuard, FormatGuard, etc., alerts can be properly logged.
   /dev/log                       w,
+  /dev/pmsg0                     w,
   /dev/random                    r,
   /dev/urandom                   r,
   /etc/locale/**                 r,
@@ -43,6 +44,7 @@
   # anything when reading so this is ok.
   /{,var/}run/systemd/journal/stdout rw,
 
+  /usr/lib{,32,64}/arm-linux-gnueabihf/**  mr,
   /usr/lib{,32,64}/locale/**             mr,
   /usr/lib{,32,64}/gconv/*.so            mr,
   /usr/lib{,32,64}/gconv/gconv-modules*  mr,
@@ -51,6 +53,13 @@
 
   # used by glibc when binding to ephemeral ports
   /etc/bindresvport.blacklist    r,
+	
+  # @Littleboy
+  /usr/lib/*/mediascanner-2.0/mediascanner-extractor r,
+  /usr/bin/media-hub-server r,
+  # some applications need translations
+  /usr/share/qt5/translations/** r,
+  /proc/9777/loginuid r,
 
   # ld.so.cache and ld are used to load shared libraries; they are best
   # available everywhere
@@ -111,6 +120,9 @@
   # recent glibc uses /dev/full in preference to /dev/null for programs
   # that don't have open fds at exec()
   /dev/full                      rw,
+  /dev/tty                       rw,
+  /socket/property_service       rw,
+  /socket/logdw                  rw,
 
   # Sometimes used to determine kernel/user interfaces to use
   @{PROC}/sys/kernel/version     r,
@@ -132,6 +144,8 @@
 
   # some applications will display license information
   /usr/share/common-licenses/**  r,
+  # some applications need translations
+  /usr/share/qt5/translations/** r,
 
   # glibc statvfs
   @{PROC}/filesystems            r,

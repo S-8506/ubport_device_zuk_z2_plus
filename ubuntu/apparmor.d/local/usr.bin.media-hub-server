@@ -4,3 +4,4 @@
 /dev/pmsg0                     rw,
 /dev/socket/property_service	rw,
 /dev/proc/cmdline		r,
+/socket/logdw  rw,
